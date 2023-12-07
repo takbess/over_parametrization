@@ -10,7 +10,7 @@ dataset:
 
 model:
   _target_: model.PolynomialModel
-  n: 3
+  n: 1000
 
 loss:
   _target_: loss.total_loss
@@ -21,4 +21,4 @@ optimizer:
   lr: 0.01
 
 trainer:
-  epochs: 10
+  epochs: 1000
