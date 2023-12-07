@@ -5,7 +5,7 @@ __pycache__/
 
 dataset/
 
-images/
+!images/
 *.jpg
 *.png
 
