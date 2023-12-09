@@ -56,6 +56,33 @@ def main(cfg: DictConfig):
     mlflow.log_metric("train_loss", loss.item(), step=epoch)
     mlflow.log_metric("test_loss", test_loss.item(), step=epoch)
 
+    if epoch % 100 == 0:
+      # モデルのプロット
+      # プロット用のx
+      # x_plot = torch.linspace(x_train.min().item(), x_train.max().item(), 100)
+      x_plot = torch.linspace(-1, 1, 100)
+      # モデルの出力
+      y_plot = model(x_plot)
+      # グラフの描画
+      plt.plot(x_plot.numpy(), y_plot.detach().numpy(), color="black", label="Model")
+      plt.scatter(x_train, y_train, color="red", label="Train Data")
+      plt.scatter(x_test, y_test, color="blue", label="Test Data")
+      plt.xlabel("x")
+      plt.ylabel("y")
+      plt.legend()
+      # plt.show()
+      plt.ylim([-2, 2])
+      plt.savefig("tmp_change_epochs.png")
+      print("save figure in tmp.png")
+      plt.clf()
+      
+
+  # 最終的なlossの保存
+  # with open("all_loss.txt","a") as f:
+  #   f.write(f"cfg.model.n: {cfg.model.n}, test_loss: {test_loss.item()} \n")
+  with open("all_loss.txt","a") as f:
+    f.write(f"{cfg.model.n}, {test_loss.item()} \n")
+  
   # mlflowにモデルを保存
   mlflow.pytorch.log_model(model, "model")
   # mlflowの実験を終了
@@ -63,7 +90,8 @@ def main(cfg: DictConfig):
 
   # モデルのプロット
   # プロット用のx
-  x_plot = torch.linspace(x_train.min().item(), x_train.max().item(), 100)
+  # x_plot = torch.linspace(x_train.min().item(), x_train.max().item(), 100)
+  x_plot = torch.linspace(-1, 1, 100)
   # モデルの出力
   y_plot = model(x_plot)
   # グラフの描画
@@ -76,6 +104,7 @@ def main(cfg: DictConfig):
   # plt.show()
   plt.savefig("tmp.png")
   print("save figure in tmp.png")
+  plt.clf()
 
 if __name__ == "__main__":
   main()

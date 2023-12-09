@@ -3,11 +3,11 @@ __pycache__/
 *$py.class
 */__pycache__
 
-dataset/
+# dataset/
 
-*.jpg
-*.png
-!images/*.png
+# *.jpg
+# *.png
+# !images/*.png
 
 
 outputs/
